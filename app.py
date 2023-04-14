@@ -53,10 +53,18 @@ def addnews():
 @app.route("/texts", methods = ['GET', 'POST'])
 def text():
     texts = Text.query.order_by(desc(Text.id))
+    # Text.query.filter(Text.id == text).delete()
     
     return render_template('texts.html', texts=texts)
 
          
+
+@app.route('/deletenote/<int:id>')
+def deletenote(id):
+    texts = Text.query.get(id)
+    db.session.delete(texts)
+    db.session.commit()
+    return redirect(url_for('text'))
 
 
     
